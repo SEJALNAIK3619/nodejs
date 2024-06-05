@@ -56,3 +56,23 @@ xyz();
 // res.send(data);
 // });
 // app.listen(5500);
+
+
+// connect mondodb
+// const express = require('express');
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost:27017/ECOM');
+// var productSchema = mongoose.Schema({
+//     productName : String,
+//     productCategory : String,
+//     productPrice : Number
+// });
+// var Product = mongoose.model('Product',productSchema,'PRODUCT')
+// const app = express();
+
+// app.get('/',async (req,res)=>{
+//     var data = await Product.find();
+//     res.send(data);
+// });
+
+// app.listen(5500);
