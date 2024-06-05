@@ -48,4 +48,11 @@ console.log(a+b+c+d+e);
 
 xyz();
 
-
+// const express=require('express');
+// const mongoose=require('mongoose');
+// const data=require('./data');
+// const app=express();
+// app.get('/',(req,res)=>{
+// res.send(data);
+// });
+// app.listen(5500);
