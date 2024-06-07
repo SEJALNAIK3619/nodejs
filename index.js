@@ -48,6 +48,7 @@ console.log(a+b+c+d+e);
 
 xyz();
 
+
 // const express=require('express');
 // const mongoose=require('mongoose');
 // const data=require('./data');
@@ -57,6 +58,7 @@ xyz();
 // });
 // app.listen(5500);
 
+//get method
 
 // connect mondodb
 // const express = require('express');
