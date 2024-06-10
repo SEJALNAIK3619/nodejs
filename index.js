@@ -174,3 +174,14 @@ xyz();
 // });
 
 // app.listen(5500)
+app.delete('/:pname',async (req,res)=>{
+    var data= await Product.deleteOne(
+        {productName:req.params.pname}
+        );
+    res.send(data);
+});
+
+app.post('/search',async (req,res)=>{
+    var data=await Product.findOne(req.body);
+     res.send(data);        
+    });
