@@ -137,3 +137,40 @@ xyz();
 // });
 
 // app.listen(5500);
+
+//get post put method
+// const express = require('express');
+// const mongoose= require('mongoose');
+// const app = express();
+// app.use(express.json());
+
+// mongoose.connect('mongodb://localhost:27017/ECOM');
+
+// var productSchema = mongoose.Schema({
+//     productName : String,
+//     productCategory : String,
+//     productPrice : Number
+// });
+
+// var Product = new mongoose.model('Product',productSchema,'PRODUCT');
+
+// app.get('/',async (req,res)=>{
+//     var data = await Product.find();
+//          res.send(data);
+//          });
+
+// app.post('/',async(req,res)=>{
+
+//     var data=new Product(req.body);
+//     await data.save();
+//     res.send(data);
+// });
+// app.put('/:pname',async (req,res)=>{
+//     var data= await Product.updateOne(
+//         {productName:req.params.pname},
+//         {$set:req.body}
+//     );
+//     res.send(data);
+// });
+
+// app.listen(5500)
