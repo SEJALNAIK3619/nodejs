@@ -1,0 +1,39 @@
+// var p1 = new Promise((resolve,reject)=>{
+//   setTimeout(()=>{
+//       resolve(78);
+//   },3000);
+// });
+
+// var p2 = new Promise((resolve,reject)=>{
+//   setTimeout(()=>{
+//       resolve(79);
+//   },1000);
+// });
+
+// var p3 = new Promise((resolve,reject)=>{
+//   setTimeout(()=>{
+//       resolve(80);
+//   },5000);
+// });
+
+// var p4 = new Promise((resolve,reject)=>{
+//   setTimeout(()=>{
+//       resolve(81);
+//   },4000);
+// });
+
+// var p5 = new Promise((resolve,reject)=>{
+//   setTimeout(()=>{
+//       resolve(82);
+//   },2500);
+// });
+
+// async function sum(){
+//   var p=[p1,p2,p3,p4,p5];
+//   var total = 0;
+//   for(var a=0;a<p.length;a++){
+//     total += await p[a];
+//   }
+//   console.log(total);
+// }
+// sum();
