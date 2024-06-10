@@ -100,6 +100,38 @@ xyz();
 // app.post('/', async (req,res)=>{
 //     console.log(req.body);
 //     var data = new Product(req.body);
+
+//get and post both method
+// const express = require('express');
+// const mongoose= require('mongoose');
+// const data1 = require('./Data');
+
+// const app = express();
+// app.use(express.json());
+
+// mongoose.connect('mongodb://localhost:27017/ECOM');
+
+// var productSchema = mongoose.Schema({
+//     productName : String,
+//     productCategory : String,
+//     productPrice : Number
+// });
+
+// var Product = new mongoose.model('Product',productSchema,'PRODUCT');
+
+// app.get('/',async (req,res)=>{
+//     //  var data1 = await Product.find();
+//      res.send(data1);
+//          });
+
+// app.post('/',async(req,res)=>{
+
+//     var data=new Product(req.body);
+//     await data.save();
+//     res.send(data);
+// })
+
+// app.listen(5500)
 //     await data.save();
 //     res.send(data);
 // });
