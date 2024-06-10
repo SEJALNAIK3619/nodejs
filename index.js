@@ -174,14 +174,34 @@ xyz();
 // });
 
 // app.listen(5500)
-app.delete('/:pname',async (req,res)=>{
-    var data= await Product.deleteOne(
-        {productName:req.params.pname}
-        );
-    res.send(data);
-});
+// app.delete('/:pname',async (req,res)=>{
+//     var data= await Product.deleteOne(
+//         {productName:req.params.pname}
+//         );
+//     res.send(data);
+// });
 
-app.post('/search',async (req,res)=>{
-    var data=await Product.findOne(req.body);
-     res.send(data);        
-    });
+// app.post('/search',async (req,res)=>{
+//     var data=await Product.findOne(req.body);
+//      res.send(data);        
+//     });
+
+
+// var userSchema = mongoose.Schema({
+//     userName:String,
+//     email:String,
+//     password:String
+// });
+ 
+// var User = new mongoose.model('User',userSchema,'user');
+
+// app.post('/register',async (req,res)=>{
+//     var data = new User(req.body);
+//     await data.save();
+//     res.send(data);
+// });
+
+// app.post('/login',async (req,res)=>{
+//     var data = await User.findOne(req.body);
+//     res.send(data);
+// });
