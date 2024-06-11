@@ -1,0 +1,122 @@
+form in curd
+import { useState } from "react";
+
+export default function Insert() {
+
+    var[productName,setproductName] = useState("");
+    var[productCategory,setproductCategory] = useState("");
+    var[productPrice,setproductPrice] = useState(null);
+
+
+    async function getData(e){
+        e.preventDefault();
+        var data = {productName,productCategory,productPrice};
+        var res = await fetch('http://localhost:5500/',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(data)
+        });
+        if(res.ok){
+            console.log("Data inserted successfully");
+        }
+    }
+
+    return (
+        <>
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-lg-8 offset-lg-2">
+                        <form onSubmit={getData}>
+                            <label className="form-label">Product Name</label>
+                            <input type="text" className="form-control mb-3"
+                            onChange={(e)=>setproductName(e.target.value)}
+                            />
+                            <label className="form-label">Product Category</label>
+                            <input type="text" className="form-control mb-3"
+                            onChange={(e)=>setproductCategory(e.target.value)}
+                            />
+                            <label className="form-label">Product Price</label>
+                            <input type="number" className="form-control mb-3"
+                            onChange={(e)=>setproductPrice(e.target.value)}
+                            />
+                            <button type="submit" className="btn btn-info">Add Product</button>
+                        </form>
+                    </div>
+                </div>
+            </div>  
+        </>
+    );
+}
+
+index.html
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+mongoose.connect('mongodb://localhost:27017/ECOM');
+
+var productSchema = mongoose.Schema({
+    productName: String,
+    productCategory: String,
+    productPrice: Number
+});
+
+var Product = new mongoose.model('Product',productSchema,'PRODUCT');
+
+app.post('/',async (req,res)=>{
+    var data = new Product(req.body);
+    await data.save();
+    res.send(data);
+});
+
+app.get('/',async (req,res)=>{
+    var data = await Product.find();
+    res.send(data);
+});
+
+app.put('/:pname',async (req,res)=>{
+    var data = await Product.updateOne(
+        {productName:req.params.pname},
+        {$set:req.body}
+    );
+    res.send(data);
+});
+
+app.delete('/:pname',async (req,res)=>{
+    var data = await Product.deleteOne(
+        {productName:req.params.pname}
+    );
+    res.send(data);
+});
+
+app.post('/search',async (req,res)=>{
+    var data = await Product.find(req.body);
+    res.send(data);
+});
+
+var userSchema = mongoose.Schema({
+    userName:String,
+    email:String,
+    password:String
+});
+ 
+var User = new mongoose.model('User',userSchema,'user');
+
+app.post('/register',async (req,res)=>{
+    var data = new User(req.body);
+    await data.save();
+    res.send(data);
+});
+
+app.post('/login',async (req,res)=>{
+    var data = await User.findOne(req.body);
+    res.send(data);
+});
+
+app.listen(5500);
