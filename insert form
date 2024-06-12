@@ -1,0 +1,50 @@
+import { useState } from "react";
+
+export default function Insert() {
+
+    var[productName,setproductName] = useState("");
+    var[productCategory,setproductCategory] = useState("");
+    var[productPrice,setproductPrice] = useState(null);
+
+
+    async function getData(e){
+        e.preventDefault();
+        var data = {productName,productCategory,productPrice};
+        var res = await fetch('http://localhost:5500/',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(data)
+        });
+        if(res.ok){
+            console.log("Data inserted successfully");
+        }
+    }
+
+    return (
+        <>
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-lg-8 offset-lg-2">
+                        <form onSubmit={getData}>
+                            <label className="form-label">Product Name</label>
+                            <input type="text" className="form-control mb-3"
+                            onChange={(e)=>setproductName(e.target.value)}
+                            />
+                            <label className="form-label">Product Category</label>
+                            <input type="text" className="form-control mb-3"
+                            onChange={(e)=>setproductCategory(e.target.value)}
+                            />
+                            <label className="form-label">Product Price</label>
+                            <input type="number" className="form-control mb-3"
+                            onChange={(e)=>setproductPrice(e.target.value)}
+                            />
+                            <button type="submit" className="btn btn-info">Add Product</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
