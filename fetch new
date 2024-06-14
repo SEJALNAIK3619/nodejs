@@ -1,0 +1,176 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Fetch() {
+
+    var [data, setdata] = useState([]);
+
+    var nav = useNavigate();
+
+    var [productName, setproductName] = useState("");
+    var [productCategory, setproductCategory] = useState("");
+    var [productPrice, setproductPrice] = useState(null);
+    var [params, setparams] = useState("");
+    var [search, setsearch] = useState([]);
+
+    async function fetchData() {
+        var res = await fetch('http://localhost:5500/', {
+            method: 'GET'
+        });
+        var result = await res.json();
+        setdata(result)
+    }
+
+    useEffect(() => {
+        fetchData();
+    });
+
+    async function deleteData(pname) {
+        alert('Data Delete');
+        var res = await fetch(http://localhost:5500/${pname}, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (res.ok) {
+            console.log("Data Delete")
+        }
+    }
+
+    function selectData(pname, cname, price) {
+        setproductName(pname);
+        setproductCategory(cname);
+        setproductPrice(price);
+        setparams(pname);
+    }
+
+    async function updateData(e) {
+        e.preventDefault();
+        var data = { productName, productCategory, productPrice };
+        var res = await fetch(http://localhost:5500/${params}, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (res.ok) {
+            console.log("Data Update");
+        }
+    }
+
+    async function searchData() {
+        var res = await fetch('http://localhost:5500/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productName })
+        });
+        var data = await res.json();
+        setsearch(data);
+    }
+
+    return (
+        <>
+            <div className="container mt-3">
+                <div className="row">
+                    <div className="col-8 d-flex">
+                        <input type="text" className="form-control"
+                            onChange={(e) => setproductName(e.target.value)}
+                        />
+                        <button className="btn btn-info" onClick={searchData}>Search</button>
+                    </div>
+                    <div className="col-4">
+                        <button className="btn btn-info ms-auto d-block" onClick={() => nav('insert')}>Add New Product</button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-8 offset-2">
+                        <table className="table">
+                            <tbody>
+                                {
+                                    search.map((value, index) => (
+                                        <tr>
+                                            <td>{index + 1}</td>
+                                            <td>{value.productName}</td>
+                                            <td>{value.productCategory}</td>
+                                            <td>{value.productPrice}</td>
+                                            <td>
+                                                <button onClick={() => selectData(value.productName, value.productCategory, value.productPrice)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
+                                                <button onClick={() => deleteData(value.productName)} className="btn btn-danger ms-2">Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-8 offset-lg-2">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Product Category</th>
+                                    <th>Product Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    data.map((value, index) => {
+                                        return (
+
+                                            <tr>
+                                                <td>{index + 1}</td>
+                                                <td>{value.productName}</td>
+                                                <td>{value.productCategory}</td>
+                                                <td>{value.productPrice}</td>
+                                                <td>
+                                                    <button onClick={() => selectData(value.productName, value.productCategory, value.productPrice)} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
+                                                    <button onClick={() => deleteData(value.productName)} className="btn btn-danger ms-2">Delete</button>
+                                                </td>
+                                            </tr>
+
+                                        );
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form onSubmit={updateData}>
+                                <label className="form-label">Product Name</label>
+                                <input value={productName} onChange={(e) => setproductName(e.target.value)} type="text" className="form-control mb-3" />
+                                <label className="form-label">Product Category</label>
+                                <input value={productCategory} onChange={(e) => setproductCategory(e.target.value)} type="text" className="form-control mb-3" />
+                                <label className="form-label">Product Price</label>
+                                <input value={productPrice} onChange={(e) => setproductPrice(e.target.value)} type="number" className="form-control mb-3" />
+                                <button type="submit" class="btn btn-primary">Update Data</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </>
+    );
+}
