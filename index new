@@ -1,0 +1,69 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+mongoose.connect('mongodb://localhost:27017/ecomm');
+
+var productSchema = mongoose.Schema({
+    productName: String,
+    productCategory: String,
+    productPrice: Number
+});
+
+var Product = new mongoose.model('Product',productSchema,'product');
+
+app.post('/',async (req,res)=>{
+    var data = new Product(req.body);
+    await data.save();
+    res.send(data);
+});
+
+app.get('/',async (req,res)=>{
+    var data = await Product.find();
+    res.send(data);
+});
+
+app.put('/:pname',async (req,res)=>{
+    var data = await Product.updateOne(
+        {productName:req.params.pname},
+        {$set:req.body}
+    );
+    res.send(data);
+});
+
+app.delete('/:pname',async (req,res)=>{
+    var data = await Product.deleteOne(
+        {productName:req.params.pname}
+    );
+    res.send(data);
+});
+
+app.post('/search',async (req,res)=>{
+    var data = await Product.find(req.body);
+    res.send(data);
+});
+
+var userSchema = mongoose.Schema({
+    userName:String,
+    email:String,
+    password:String
+});
+ 
+var User = new mongoose.model('User',userSchema,'user');
+
+app.post('/register',async (req,res)=>{
+    var data = new User(req.body);
+    await data.save();
+    res.send(data);
+});
+
+app.post('/login',async (req,res)=>{
+    var data = await User.findOne(req.body);
+    res.send(data);
+});
+
+app.listen(5500);
