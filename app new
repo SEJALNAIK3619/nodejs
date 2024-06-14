@@ -1,0 +1,19 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Fetch from './component/Fetch';
+import Insert from './component/Insert';
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Fetch/>}/>
+          <Route path="insert" element={<Insert/>}/>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}
+
+export default App;
